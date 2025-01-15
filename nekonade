@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫を撫でるゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            position: relative;
+            margin-top: 50px;
+        }
+        .cat {
+            width: 200px;
+            cursor: pointer;
+        }
+        .speech-bubble {
+            position: absolute;
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 10px;
+            width: 150px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>ふみゃ猫を撫でてみよう！</h1>
+    <div class="container">
+        <img src="cat.png" alt="猫" class="cat" id="catImage">
+    </div>
+
+    <script>
+        const catImage = document.getElementById('catImage');
+        const container = document.querySelector('.container');
+
+        // ランダムなセリフを用意
+        const phrases = [
+            'にゃーん！',
+            'ゴロゴロ〜',
+            'もっと撫でて〜！',
+            'にゃっ！',
+            '大好きだにゃ〜'
+        ];
+
+        // 猫を撫でたときのイベント
+        catImage.addEventListener('click', () => {
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+            const speechBubble = document.createElement('div');
+            speechBubble.classList.add('speech-bubble');
+            speechBubble.textContent = randomPhrase;
+
+            // 吹き出しをランダムな位置に配置
+            const randomX = Math.random() * (container.offsetWidth - 150);
+            const randomY = Math.random() * (container.offsetHeight - 100);
+            speechBubble.style.left = `${randomX}px`;
+            speechBubble.style.top = `${randomY}px`;
+
+            container.appendChild(speechBubble);
+            speechBubble.style.display = 'block';
+
+            // 一定時間後に吹き出しを削除
+            setTimeout(() => {
+                speechBubble.remove();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
